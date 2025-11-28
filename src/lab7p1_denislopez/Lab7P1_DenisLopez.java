@@ -115,8 +115,30 @@ public class Lab7P1_DenisLopez {
     }
     
     public static void estadisticas(int[][]matriz){
-        
+        int acum=0;
+        int max=0;
+        int min=0;
+        for(int i=0;i<matriz.length;i++){
+            for(int j=0;j<matriz[i].length;j++){
+               if(i==matriz.length&&i==matriz.length-1){
+                   acum++;   
+                }
+                if(i==matriz.length-1-j){
+                   acum++; 
+                } 
+            }
+        }
     }
+    
+    public static int[][] matrizFibonacci(int [][] matriz){
+        for(int i=0;i<matriz.length;i++){
+            for(int j=0;j<matriz[i].length;j++){
+                matriz[i][j]=(i-1)+(i-2);
+            }
+        }
+        return matriz;
+    }
+    
     
     public static int [] multiplicarDiagonales(int [][] x){
         int[]temp=new int [3];
@@ -139,6 +161,16 @@ public class Lab7P1_DenisLopez {
          temp[1]=acum2;
          temp[2]=total;
         return temp;
+    }
+    
+   // public static int[] arreglo(int[]x){
+    //    int[]temp=new int[2];
+        
+        
+    //}
+    
+    public static void permutaciones(){
+        
     }
     
 }
