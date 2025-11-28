@@ -27,22 +27,27 @@ public class Lab7P1_DenisLopez {
         while(op!=4){
             switch(op){
                 case 1:{
-                    int matriz=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño de la matriz (1-6): "));
-                    int [][]z=genMatriz(matriz);
-                    imprimirconJOPtion(z);
-                    if(z.length<0&&z.length>6){
-                        String salida="Error: el numero debe ser mayor que 0 y menor que 6";
+                    int n = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño de la matriz n (1-5):"));
+                    if (n <= 0 || n >= 6){
+                      String salida="Error: el tamaño debe ser mayor que 0 y menor que 6";
+                      JOptionPane.showMessageDialog(null, salida);
                     }
-                    
+                    int [][] matrizZ = genMatriz(n);
+                    imprimirconJOPtion(matrizZ);
+                    int codigo = sumaZ(matrizZ);
+                    JOptionPane.showMessageDialog(null, "Código secreto (suma de la Z): " + codigo);
+                    estadisticas(matrizZ);
                     break;
                 }
                 case 2:{
                     int matriz=Integer.parseInt(JOptionPane.showInputDialog("Ingrese el tamaño de la matriz: "));
-                    int [][]diagonal=genMatriz(matriz);
-                    imprimirconJOPtion(diagonal);
-                    //int[] diagonal=(multiplicarDiagonales(diagonal));
-                    String salida="Total Diagonal#1:"+diagonal[0]+"\n Total Diagonal#2:"+diagonal[1]+"\n Total final:"+diagonal[2];
-                    JOptionPane.showMessageDialog(null,salida);
+                    if(matriz<3){
+                      String salida="Ingrese un tamano valido: "; 
+                      JOptionPane.showMessageDialog(null,salida);
+                    }
+                    int [][]fibonacci=matrizFibonacci(matriz);
+                    imprimirconJOPtion(fibonacci);
+                    multiplicarDiagonales(fibonacci);
                     break;
                 }
                 case 3:{
@@ -95,52 +100,75 @@ public class Lab7P1_DenisLopez {
       return temp;
     }
     
-    public static int[][] sumaZ(int [][] matriz){
-        //int filas=matriz.length;
-        //int columnas=matriz[0].length;
-        //matriz=new int[filas][columnas];
+    public static int sumaZ(int [][] matriz){
         int acum=0;
-        for(int i=0;i<matriz.length;i++){
-            for(int j=0;j<matriz[0].length;j++){
-                if(i==matriz.length&&i==matriz.length-1){
-                   acum+=matriz[i][j];   
-                }
-                if(i==matriz.length-1-j){
-                   acum+=matriz[i][j]; 
-                }
-            } 
-        }
+         for(int i=0;i<matriz.length;i++){
+             for(int j=0;j<matriz.length;j++){
+                 if(i==matriz.length-1-j){
+                     acum += matriz[i][j];
+                 }
+             }
+         }
         
-        return matriz;
+        for(int j=0;j<matriz.length;j++){
+          acum+=matriz[0][j];
+          if(matriz.length>1){
+           acum += matriz[matriz.length-1][j];   
+          }
+        }
+        return acum;
     }
     
     public static void estadisticas(int[][]matriz){
-        int acum=0;
-        int max=0;
-        int min=0;
-        for(int i=0;i<matriz.length;i++){
-            for(int j=0;j<matriz[i].length;j++){
-               if(i==matriz.length&&i==matriz.length-1){
-                   acum++;   
-                }
-                if(i==matriz.length-1-j){
-                   acum++; 
-                } 
+        int x = matriz.length;
+        int cont = 0;
+        int suma = 0;
+        int max = 0;
+        int min = 0;
+        for(int i=0;i<x;i++){
+            for(int j=0;j<x;j++){
+                if(i == 0||i == x-1 || i == x-1-j){
+                int val = matriz[i][j];
+                    cont++;
+                    suma += val;
+                    if(max == 0 || val > max){
+                        max = val;
+                    }
+                    if(min == 0 || val < min){
+                        min = val;
+            }
             }
         }
+        double prom = (double)suma / cont;
+        String msg = "Estadísticas de la Z:\n"+"Elementos: "+cont+"\n"+"Máximo: "+max+"\n"+"Mínimo: "+min+"\n"+"Promedio: "+prom;
+        JOptionPane.showMessageDialog(null, msg);
     }
     
-    public static int[][] matrizFibonacci(int [][] matriz){
-        for(int i=0;i<matriz.length;i++){
-            for(int j=0;j<matriz[i].length;j++){
-                matriz[i][j]=(i-1)+(i-2);
+    public static int[][] matrizFibonacci(int x){
+        int[][] temp = new int[x][x];
+        int matriz = x*x;
+        int a= 1;
+        int b= 1;
+        for(int i=0;i<matriz;i++){
+            int valor;
+            if(i==0 || i==1){
+                valor=1;
+            } 
+            else{
+                int c=a+b;
+                valor = c;
+                a=b;
+                b=c;
             }
+            int fila = i / x;
+            int columna = i % x;
+            temp[fila][columna] = valor;
         }
-        return matriz;
+        return temp;
     }
     
     
-    public static int [] multiplicarDiagonales(int [][] x){
+    public static void multiplicarDiagonales(int [][] x){
         int[]temp=new int [3];
         int acum=0;
         int acum2=0;
@@ -160,17 +188,27 @@ public class Lab7P1_DenisLopez {
          temp[0]=acum;
          temp[1]=acum2;
          temp[2]=total;
-        return temp;
+         String salida="Total Diagonal#1:"+temp[0]+"\n Total Diagonal#2:"+temp[1]+"\n Total final:"+temp[2];
+         JOptionPane.showMessageDialog(null,salida);
+        
     }
     
-   // public static int[] arreglo(int[]x){
-    //    int[]temp=new int[2];
-        
-        
-    //}
+    public static void permutaciones(int[][] x, int indice){
+        for(int i=0;i<x.length;i++){
+            for(int j=0;j<x[i].length;j++){
+                
+            } 
+        }
+    }
     
-    public static void permutaciones(){
-        
+    
+    
+    public static int factoriales(int x){
+        int factorial = 1;
+        for(int i=2;i<=x;i++){
+            factorial *= i;
+        }
+        return factorial;
     }
     
 }
